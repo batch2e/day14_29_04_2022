@@ -44,6 +44,7 @@ CREATE TABLE customerdetails(
   INSERT INTO itemdetails VALUES('I0006','Perfume',600,400,'Cosmetics');
   INSERT INTO itemdetails VALUES('I0007','Kajal Pencil',15.56,200,'Cosmetics');
 
+ 3145
 
 
 
@@ -96,7 +97,7 @@ Q. Display the customerdetails name whose transaction is most.
 Q. display itemdetailsid,itemdetailsname,customerdetailsid, customerdetailsname and dop. Sort on date. 
 Q. display the customerdetails name who purchased the itemdetails on today's date.
 --------------------------------------------------------------------------------------------------------------------------------------
-Display the itemid
+Display the itemid itemname for the items which were purchased and having maximum price.
 select i.itemid, itemdetailsname 
 from itemdetails i JOIN Purchace p 
 on i.itemid=p.itemid 
@@ -131,3 +132,54 @@ FROM itemdetails
 GROUP BY category
 HAVING count(itemid)=
 (SELECT max(count(itemid)) FROM itemdetails GROUP BY category)
+
+
+Q Display the itemid and description which were purchased between the years 2010 and 2015.
+ SELECT *
+  
+ SELECT i.itemid,description
+FROM itemdetails i  JOIN purchase p 
+ON i.itemid=p.itemid
+WHERE to_char(dop,'yyyy') between '2010' and '2015';
+
+
+ SELECT i.itemid,description
+FROM itemdetails i  JOIN purchase p 
+ON i.itemid=p.itemid
+WHERE to_char(dop,'yyyy') between 2010 and 2015;
+
+
+
+SELECT i.itemid,description
+FROM itemdetails i  JOIN purchase p 
+ON i.itemid=p.itemid
+WHERE to_char(dop,'yyyy')>=2010 and to_char(dop,'yyyy')<=2015;
+
+
+Q Display itemid,description,custid,firstname, year_of_purchase for the items purchased after 2015 display in descending order
+ of the year. 
+
+
+SELECT i.itemid,description,c.custid,firstname,to_char(dop,'yyyy') year
+FROM itemdetails i  JOIN purchase p 
+ON i.itemid=p.itemid
+JOIN customerdetails c
+ON c.custid=p.custid
+WHERE to_char(dop,'yyyy')>2015
+order by year desc
+
+
+ Display itemid,description,custid,firstname, year_of_purchase for the items purchased in the current year.
+
+
+SELECT i.itemid,description,c.custid,firstname,to_char(dop,'yyyy') year
+FROM itemdetails i JOIN purchase p 
+ON i.itemid=p.itemid
+JOIN customerdetails c
+ON c.custid=p.custid
+WHERE to_char(dop,'yyyy')=to_char(sysdate,'yyyy');
+
+
+
+ 
+
